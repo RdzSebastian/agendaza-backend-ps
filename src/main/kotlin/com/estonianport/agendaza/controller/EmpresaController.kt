@@ -4,7 +4,6 @@ import com.estonianport.agendaza.dto.EventoDto
 import com.estonianport.agendaza.dto.PagoDto
 import com.estonianport.agendaza.dto.TipoEventoDTO
 import com.estonianport.agendaza.dto.UsuarioAbmDto
-import com.estonianport.agendaza.model.Duracion
 import com.estonianport.agendaza.model.Empresa
 import com.estonianport.agendaza.model.Extra
 import com.estonianport.agendaza.model.Servicio
@@ -42,14 +41,14 @@ class EmpresaController {
         return empresaService.save(empresa)
     }
 
-    @GetMapping("/getAllEventoByEmpresaId/{id}")
-    fun getAllEventoByEmpresaId(@PathVariable("id") id: Long): List<EventoDto> {
-        return empresaService.getAllEventoByEmpresaId(empresaService.findEmpresaById(id))
+    @GetMapping("/getAllEventoByEmpresaId/{id}/{pageNumber}")
+    fun getAllEventoByEmpresaId(@PathVariable("id") id: Long, @PathVariable("pageNumber") pageNumber : Int): List<EventoDto> {
+        return empresaService.getAllEventoByEmpresaId(id, pageNumber)
     }
 
     @PutMapping("/getAllEventoByEmpresaIdAndFechaFiltro/{id}")
     fun getAllEventoByEmpresaIdAndFechaFiltro(@PathVariable("id") id: Long, @RequestBody fechaFiltro : LocalDate): MutableSet<EventoDto> {
-        val listaEventos = empresaService.getAllEventoByEmpresaId(empresaService.findEmpresaById(id))
+        val listaEventos = empresaService.getAllEventosByEmpresaId(empresaService.findEmpresaById(id))
         return listaEventos.filter { it.inicio.toLocalDate() == fechaFiltro }.toMutableSet()
     }
 
