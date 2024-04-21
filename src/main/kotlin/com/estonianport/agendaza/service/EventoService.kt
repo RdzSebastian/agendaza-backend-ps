@@ -37,6 +37,10 @@ class EventoService : GenericServiceImpl<Evento, Long>() {
         return eventoRepository.findById(id).get()
     }
 
+    fun contadorDeEventos(id : Long): Int {
+        return eventoRepository.cantidadDeEventos(id)
+    }
+
     fun listaEventoToListaEventoDto(listaEvento : MutableList<Evento>?) : List<EventoDto>?{
         return listaEvento!!.map { it.toDto() }
     }

@@ -30,6 +30,9 @@ interface EventoRepository : CrudRepository<Evento, Long>{
     @Query(value = "select e from Evento e where e.empresa.id = ?1")
     fun eventosByEmpresa(id : Long, pageable : Pageable) : Page<Evento>
 
+    @Query("SELECT COUNT(e) FROM Evento e WHERE e.empresa.id = ?1 AND e.fechaBaja IS NULL")
+    fun cantidadDeEventos(id : Long) : Int
+
     @EntityGraph(attributePaths = ["capacidad", "encargado", "cliente", "tipoEvento.capacidad"])
     fun findAllByEmpresa(empresa: Empresa) : List<Evento>
 

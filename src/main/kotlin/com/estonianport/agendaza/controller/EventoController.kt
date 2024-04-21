@@ -78,6 +78,9 @@ class EventoController {
         return eventoService.findById(id)
     }
 
+    @GetMapping("/cantEventos/{id}")
+    fun cantEventos(@PathVariable("id") id: Long) =  eventoService.contadorDeEventos(id)
+
     @PostMapping("/saveEvento")
     fun save(@RequestBody eventoReservaDto: EventoReservaDto): Long {
 

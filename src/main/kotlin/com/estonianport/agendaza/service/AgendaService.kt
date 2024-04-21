@@ -8,10 +8,14 @@ import com.estonianport.agendaza.model.Empresa
 import com.estonianport.agendaza.model.Evento
 import com.estonianport.agendaza.model.TipoExtra
 import com.estonianport.agendaza.model.Usuario
+import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service
 
 @Service
 class AgendaService {
+
+    @Autowired
+    lateinit var eventoService: EventoService
 
     //TODO refactor a cargo.toAgendaDto
     fun getListaAgendasByUsuario(listaCargo : List<Cargo>): List<AgendaDto> {
@@ -31,7 +35,8 @@ class AgendaService {
             empresa.listaExtra.filter  { (it.tipoExtra == TipoExtra.EVENTO || it.tipoExtra == TipoExtra.VARIABLE_EVENTO) && it.fechaBaja == null }.size,
             empresa.listaEvento.sumOf{ it.listaPago.filter { it.fechaBaja == null }.size },
             empresa.listaEvento.filter { it.fechaBaja == null }.size,
-            empresa.listaEvento.filter { it.fechaBaja == null }.map { it.cliente }.toSet().size,
+            //empresa.listaEvento.filter { it.fechaBaja == null }.map { it.cliente }.toSet().size,
+            eventoService.contadorDeEventos(empresa.id),
             empresa.listaExtra.filter  { (it.tipoExtra == TipoExtra.TIPO_CATERING || it.tipoExtra == TipoExtra.VARIABLE_CATERING) && it.fechaBaja == null }.size,
             empresa.listaServicio.filter { it.fechaBaja == null }.size)
     }
