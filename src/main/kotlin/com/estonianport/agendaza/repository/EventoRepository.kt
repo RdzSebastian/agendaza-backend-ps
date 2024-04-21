@@ -27,7 +27,7 @@ interface EventoRepository : CrudRepository<Evento, Long>{
 
     fun findAllByInicioBetweenAndEmpresa(inicio: LocalDateTime, fin: LocalDateTime, empresa: Empresa): List<Evento>
 
-    @Query(value = "select e from Evento e where e.empresa.id = ?1")
+    @Query(value = "select e from Evento e where e.empresa.id = ?1 AND e.fechaBaja IS NULL")
     fun eventosByEmpresa(id : Long, pageable : Pageable) : Page<Evento>
 
     @Query("SELECT COUNT(e) FROM Evento e WHERE e.empresa.id = ?1 AND e.fechaBaja IS NULL")
