@@ -45,7 +45,10 @@ class EmpresaController {
     fun getAllEventoByEmpresaId(@PathVariable("id") id: Long, @PathVariable("pageNumber") pageNumber : Int): List<EventoDto> {
         return empresaService.getAllEventoByEmpresaId(id, pageNumber)
     }
-
+    @GetMapping("/getAllEventoByFilterName/{id}/{pageNumber}/{buscar}")
+    fun getAllEventoByFilterName(@PathVariable("id") id: Long, @PathVariable("pageNumber") pageNumber : Int, @PathVariable("buscar") buscar : String): List<EventoDto> {
+        return empresaService.getAllEventoByFilterName(id, pageNumber, buscar)
+    }
     @PutMapping("/getAllEventoByEmpresaIdAndFechaFiltro/{id}")
     fun getAllEventoByEmpresaIdAndFechaFiltro(@PathVariable("id") id: Long, @RequestBody fechaFiltro : LocalDate): MutableSet<EventoDto> {
         val listaEventos = empresaService.getAllEventosByEmpresaId(empresaService.findEmpresaById(id))

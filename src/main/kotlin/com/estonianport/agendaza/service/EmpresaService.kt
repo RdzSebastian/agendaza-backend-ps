@@ -48,6 +48,12 @@ class EmpresaService : GenericServiceImpl<Empresa, Long>() {
                 evento.toDto()
             }.sortedByDescending { it.inicio }
     }
+    fun getAllEventoByFilterName(id : Long, pageNumber : Int, buscar: String): List<EventoDto>{
+        return eventoRepository.eventosByNombre(id, buscar, PageRequest.of(pageNumber,10)).filter{ it.fechaBaja == null }
+            .map { evento ->
+                evento.toDto()
+            }.sortedByDescending { it.inicio }
+    }
     fun getAllPagoByEmpresaId(empresa : Empresa): List<PagoDto> {
         return empresa.listaEvento.flatMap { evento ->
             evento.listaPago.filter {

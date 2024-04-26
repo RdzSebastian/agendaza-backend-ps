@@ -40,6 +40,9 @@ class EventoService : GenericServiceImpl<Evento, Long>() {
     fun contadorDeEventos(id : Long): Int {
         return eventoRepository.cantidadDeEventos(id)
     }
+    fun contadorDeEventosFiltrados(id : Long, buscar : String): Int {
+        return eventoRepository.cantidadDeEventosFiltrados(id,buscar)
+    }
 
     fun listaEventoToListaEventoDto(listaEvento : MutableList<Evento>?) : List<EventoDto>?{
         return listaEvento!!.map { it.toDto() }
