@@ -78,6 +78,11 @@ class EventoController {
         return eventoService.findById(id)
     }
 
+    @GetMapping("/cantEventos/{id}")
+    fun cantEventos(@PathVariable("id") id: Long) =  eventoService.contadorDeEventos(id)
+
+    @GetMapping("/cantEventosFiltrados/{id}/{buscar}")
+    fun cantEventosFiltrados(@PathVariable("id") id: Long, @PathVariable("buscar") buscar : String) =  eventoService.contadorDeEventosFiltrados(id,buscar)
     @PostMapping("/saveEvento")
     fun save(@RequestBody eventoReservaDto: EventoReservaDto): Long {
 
