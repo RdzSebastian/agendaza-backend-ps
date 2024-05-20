@@ -3,12 +3,12 @@ package com.estonianport.agendaza.service
 import GenericServiceImpl
 import com.estonianport.agendaza.repository.UsuarioRepository
 import com.estonianport.agendaza.dto.GenericItemDto
-import com.estonianport.agendaza.model.Cargo
+import com.estonianport.agendaza.dto.UsuarioAbmDto
 import com.estonianport.agendaza.model.Usuario
 import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.data.domain.PageRequest
 import org.springframework.data.repository.CrudRepository
 import org.springframework.stereotype.Service
-import java.util.*
 
 @Service
 class UsuarioService : GenericServiceImpl<Usuario, Long>() {
@@ -22,7 +22,15 @@ class UsuarioService : GenericServiceImpl<Usuario, Long>() {
     fun getUsuarioIdByUsername(username: String): Long {
         return usuarioRepository.getByUsername(username).id
     }
-
+    fun getAllUsuariosByEmpresaId(id : Long, pageNumber : Int): List<UsuarioAbmDto> {
+        return usuarioRepository.findAll(id, PageRequest.of(pageNumber,10)).content
+            .map {
+                UsuarioAbmDto(it.id, it.nombre, it.apellido , it.username)
+            }
+    }
+    fun contadorDeUsuarios(id : Long): Int {
+        return usuarioRepository.cantidadDeUsuarios(id)
+    }
     fun getAllEmpresaByUsuario(usuario : Usuario) : List<GenericItemDto>{
         return usuario.listaCargo.map { GenericItemDto(it.empresa.id, it.empresa.nombre) }
     }

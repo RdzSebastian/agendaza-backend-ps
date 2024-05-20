@@ -38,7 +38,8 @@ class UsuarioController {
     fun abm(): MutableList<Usuario>? {
         return usuarioService.getAll()
     }
-
+    @GetMapping("/cantUsuarios/{id}")
+    fun cantUsuarios(@PathVariable("id") id: Long) =  usuarioService.contadorDeUsuarios(id)
     @PutMapping("/getUsuarioByEmail")
     fun getUsuarioByEmail(@RequestBody email : String): Usuario? {
         try {

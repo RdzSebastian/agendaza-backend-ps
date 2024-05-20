@@ -9,6 +9,7 @@ import com.estonianport.agendaza.model.Extra
 import com.estonianport.agendaza.model.Servicio
 import com.estonianport.agendaza.model.TipoExtra
 import com.estonianport.agendaza.service.EmpresaService
+import com.estonianport.agendaza.service.UsuarioService
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.web.bind.annotation.CrossOrigin
 import org.springframework.web.bind.annotation.GetMapping
@@ -25,6 +26,9 @@ class EmpresaController {
 
     @Autowired
     lateinit var empresaService: EmpresaService
+
+    @Autowired
+    lateinit var usuarioService: UsuarioService
 
     @GetMapping("/getAllEmpresa")
     fun getAll(): MutableList<Empresa>? {
@@ -49,6 +53,12 @@ class EmpresaController {
     fun getAllEventoByFilterName(@PathVariable("id") id: Long, @PathVariable("pageNumber") pageNumber : Int, @PathVariable("buscar") buscar : String): List<EventoDto> {
         return empresaService.getAllEventoByFilterName(id, pageNumber, buscar)
     }
+    @GetMapping("/getAllUsuariosByEmpresaId/{id}/{pageNumber}")
+    fun getAllUsuarios(@PathVariable("id") id: Long, @PathVariable("pageNumber") pageNumber : Int): List<UsuarioAbmDto> {
+        return usuarioService.getAllUsuariosByEmpresaId(id,pageNumber)
+    }
+
+
     @PutMapping("/getAllEventoByEmpresaIdAndFechaFiltro/{id}")
     fun getAllEventoByEmpresaIdAndFechaFiltro(@PathVariable("id") id: Long, @RequestBody fechaFiltro : LocalDate): MutableSet<EventoDto> {
         val listaEventos = empresaService.getAllEventosByEmpresaId(empresaService.findEmpresaById(id))
