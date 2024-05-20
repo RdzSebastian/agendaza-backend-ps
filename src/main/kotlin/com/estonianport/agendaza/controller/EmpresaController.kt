@@ -53,6 +53,10 @@ class EmpresaController {
     fun getAllEventoByFilterName(@PathVariable("id") id: Long, @PathVariable("pageNumber") pageNumber : Int, @PathVariable("buscar") buscar : String): List<EventoDto> {
         return empresaService.getAllEventoByFilterName(id, pageNumber, buscar)
     }
+    @GetMapping("/getAllUsersByFilterName/{id}/{pageNumber}/{buscar}")
+    fun getAllUsersByFilterName(@PathVariable("id") id: Long, @PathVariable("pageNumber") pageNumber : Int, @PathVariable("buscar") buscar : String): List<UsuarioAbmDto> {
+        return usuarioService.getAllUsersByFilterName(id, pageNumber, buscar)
+    }
     @GetMapping("/getAllUsuariosByEmpresaId/{id}/{pageNumber}")
     fun getAllUsuarios(@PathVariable("id") id: Long, @PathVariable("pageNumber") pageNumber : Int): List<UsuarioAbmDto> {
         return usuarioService.getAllUsuariosByEmpresaId(id,pageNumber)
