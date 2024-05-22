@@ -33,6 +33,10 @@ class EventoService : GenericServiceImpl<Evento, Long>() {
        return eventoRepository.findAllByEmpresa(empresa)
     }
 
+    fun findAllByUsuarioId(id: Long): List<Evento> {
+        return eventoRepository.findAllByUsuarioId(id)
+    }
+
     fun findById(id : Long): Evento {
         return eventoRepository.findById(id).get()
     }

@@ -1,6 +1,7 @@
 package com.estonianport.agendaza.service
 
 import GenericServiceImpl
+import com.estonianport.agendaza.dto.CantidadesPanelAdmin
 import com.estonianport.agendaza.model.Empresa
 import com.estonianport.agendaza.repository.EmpresaRepository
 import com.estonianport.agendaza.dto.EventoDto
@@ -17,6 +18,7 @@ class EmpresaService : GenericServiceImpl<Empresa, Long>() {
 
     @Autowired
     lateinit var empresaRepository: EmpresaRepository
+
     @Autowired
     lateinit var eventoRepository: EventoRepository
 
@@ -67,5 +69,9 @@ class EmpresaService : GenericServiceImpl<Empresa, Long>() {
         return empresa.listaEmpleados.map {
             UsuarioAbmDto(it.usuario.id, it.usuario.nombre, it.usuario.apellido, it.usuario.username)
         }
+    }
+
+    fun getAllCantidadesForPanelAdminByEmpresaId(id: Long): CantidadesPanelAdmin {
+        return empresaRepository.getAllCantidadesForPanelAdminByEmpresaId(id)
     }
 }
