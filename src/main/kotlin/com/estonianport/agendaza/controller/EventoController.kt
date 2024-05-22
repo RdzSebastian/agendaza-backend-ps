@@ -1,14 +1,7 @@
 package com.estonianport.agendaza.controller
 
 import com.estonianport.agendaza.common.emailService.EmailService
-import com.estonianport.agendaza.dto.EventoBuscarFechaDto
-import com.estonianport.agendaza.dto.EventoCateringDto
-import com.estonianport.agendaza.dto.EventoDto
-import com.estonianport.agendaza.dto.EventoExtraDto
-import com.estonianport.agendaza.dto.EventoHoraDto
-import com.estonianport.agendaza.dto.EventoPagoDto
-import com.estonianport.agendaza.dto.EventoReservaDto
-import com.estonianport.agendaza.dto.EventoVerDto
+import com.estonianport.agendaza.dto.*
 import com.estonianport.agendaza.errors.BusinessException
 import com.estonianport.agendaza.errors.NotFoundException
 import com.estonianport.agendaza.model.Estado
@@ -458,5 +451,10 @@ class EventoController {
     @GetMapping("/getPresupuesto/{id}")
     fun editEventoCantidadNombre(@PathVariable("id") id: Long): Double {
         return eventoService.findById(id).getPresupuestoTotal()
+    }
+
+    @GetMapping("/getEventosByUsuario/{id}")
+    fun findAllByUsuarioId(@PathVariable("id") id: Long): List<EventoUsuarioDto> {
+        return eventoService.findAllByUsuarioId(id).map { it.toEventoUsuarioDto(it) }
     }
 }
