@@ -78,7 +78,8 @@ class EmpresaController {
     @GetMapping("/getAllExtraTipoEventoByEmpresaId/{id}")
     fun getAllExtraTipoEventoByEmpresaId(@PathVariable("id") id: Long): MutableSet<Extra> {
         return empresaService.get(id)!!.
-            listaExtra.filter{ (it.tipoExtra == TipoExtra.EVENTO || it.tipoExtra == TipoExtra.VARIABLE_EVENTO) && it.fechaBaja == null }.toMutableSet()
+            listaExtra.filter{ (it.tipoExtra == TipoExtra.EVENTO ||
+                it.tipoExtra == TipoExtra.VARIABLE_EVENTO) && it.fechaBaja == null }.toMutableSet()
     }
 
     //TODO refactor con service getAllExtraCatering
@@ -109,5 +110,6 @@ class EmpresaController {
     fun getAllPagoByEmpresaId(@PathVariable("id") id: Long): List<PagoDto> {
         return empresaService.getAllPagoByEmpresaId(empresaService.getEmpresaListaPagoById(id))
     }
+
 
 }

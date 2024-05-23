@@ -136,5 +136,20 @@ class ExtraController {
 
         return ResponseEntity<PrecioConFechaDto>(HttpStatus.OK)
     }
+    @GetMapping("/getAllExtra/{id}/{pageNumber}")
+    fun getAllExtra(@PathVariable("id") id: Long, @PathVariable("pageNumber") pageNumber : Int): List<ExtraDTO> {
+        return extraService.extras(id,pageNumber)
+            //.filter{ (it.tipoExtra == TipoExtra.EVENTO || it.tipoExtra == TipoExtra.VARIABLE_EVENTO)}
+    }
+    @GetMapping("/getAllExtraFilter/{id}/{pageNumber}/{buscar}")
+    fun getAllExtraFilter(@PathVariable("id") id: Long, @PathVariable("pageNumber") pageNumber : Int, @PathVariable("buscar") buscar : String): List<ExtraDTO> {
+        return extraService.extrasFiltrados(id, pageNumber, buscar)
+            //.filter{ (it.tipoExtra == TipoExtra.EVENTO || it.tipoExtra == TipoExtra.VARIABLE_EVENTO)}
+
+    }
+    @GetMapping("/cantExtras/{id}")
+    fun cantExtras(@PathVariable("id") id: Long) =  extraService.contadorDeExtras(id)
+    @GetMapping("/cantExtrasFiltrados/{id}/{buscar}")
+    fun cantExtrasFiltrados(@PathVariable("id") id: Long, @PathVariable("buscar") buscar : String) = extraService.contadorDeExtrasFiltrados(id,buscar)
 
 }
