@@ -41,4 +41,6 @@ interface EventoRepository : CrudRepository<Evento, Long>{
     @EntityGraph(attributePaths = ["capacidad", "encargado", "cliente", "tipoEvento.capacidad"])
     fun findAllByEmpresa(empresa: Empresa) : List<Evento>
 
+    @Query("select e from Evento e where e.cliente.id = ?1 AND e.fechaBaja IS NULL")
+    fun findAllByUsuarioId(id: Long): List<Evento>
 }
