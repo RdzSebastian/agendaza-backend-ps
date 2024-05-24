@@ -3,9 +3,12 @@ package com.estonianport.agendaza.service
 import GenericServiceImpl
 import com.estonianport.agendaza.repository.ExtraRepository
 import com.estonianport.agendaza.dto.ExtraDTO
+import com.estonianport.agendaza.dto.UsuarioAbmDto
 import com.estonianport.agendaza.model.Extra
 import com.estonianport.agendaza.model.TipoExtra
 import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.data.domain.Page
+import org.springframework.data.domain.PageRequest
 import org.springframework.data.repository.CrudRepository
 import org.springframework.stereotype.Service
 import java.time.LocalDateTime
@@ -22,7 +25,17 @@ class ExtraService : GenericServiceImpl<Extra, Long>(){
     fun fromListaExtraDtoToListaExtra(listaExtraDTO : List<ExtraDTO>) : List<Extra>{
         return listaExtraDTO.map { extra -> this.get(extra.id)!! }
     }
+    fun contadorDeExtras(id : Long) = extraRepository.cantidadExtras(id)
 
+    fun extras(id: Long, pageNumber : Int) = extraRepository.findAll(id, PageRequest.of(pageNumber,10)).content
+            .map { extra -> extra.toDTO()}
+
+    fun extrasFiltrados(id : Long, pageNumber : Int, buscar: String)=
+        extraRepository.extrasByNombre(id, buscar, PageRequest.of(pageNumber,10)).content
+            .map { extra -> extra.toDTO()}
+
+
+    fun contadorDeExtrasFiltrados(id : Long,buscar : String) = extraRepository.cantidadExtrasFiltrados(id,buscar)
     fun fromListaExtraToListaExtraDto(listaExtra: List<Extra>, fechaEvento : LocalDateTime): List<ExtraDTO>{
         return listaExtra.map{
             it.toExtraPrecioDTO(fechaEvento)

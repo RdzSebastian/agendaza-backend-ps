@@ -74,4 +74,6 @@ class EmpresaService : GenericServiceImpl<Empresa, Long>() {
     fun getAllCantidadesForPanelAdminByEmpresaId(id: Long): CantidadesPanelAdmin {
         return empresaRepository.getAllCantidadesForPanelAdminByEmpresaId(id)
     }
+
+
 }
