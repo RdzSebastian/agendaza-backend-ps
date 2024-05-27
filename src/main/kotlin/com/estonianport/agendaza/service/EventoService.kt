@@ -5,6 +5,7 @@ import com.estonianport.agendaza.common.codeGeneratorUtil.CodeGeneratorUtil
 import com.estonianport.agendaza.dto.EventoDto
 import com.estonianport.agendaza.repository.EventoRepository
 import com.estonianport.agendaza.dto.EventoReservaDto
+import com.estonianport.agendaza.dto.UsuarioEmpresaDto
 import com.estonianport.agendaza.model.Empresa
 import com.estonianport.agendaza.model.Evento
 import com.estonianport.agendaza.model.EventoExtraVariable
@@ -33,8 +34,12 @@ class EventoService : GenericServiceImpl<Evento, Long>() {
        return eventoRepository.findAllByEmpresa(empresa)
     }
 
-    fun findAllByUsuarioId(id: Long): List<Evento> {
-        return eventoRepository.findAllByUsuarioId(id)
+    fun getEventosByUsuarioIdAndEmpresaId(usuarioEmpresaDto: UsuarioEmpresaDto): List<Evento> {
+        return eventoRepository.getEventosByUsuarioIdAndEmpresaId(usuarioEmpresaDto.usuarioId, usuarioEmpresaDto.empresaId)
+    }
+
+    fun getCantEventosByUsuarioIdAndEmpresaId(usuarioEmpresaDto: UsuarioEmpresaDto): Int {
+        return eventoRepository.getCantEventosByUsuarioIdAndEmpresaId(usuarioEmpresaDto.usuarioId, usuarioEmpresaDto.empresaId)
     }
 
     fun findById(id : Long): Evento {

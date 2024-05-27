@@ -453,8 +453,14 @@ class EventoController {
         return eventoService.findById(id).getPresupuestoTotal()
     }
 
-    @GetMapping("/getEventosByUsuario/{id}")
-    fun findAllByUsuarioId(@PathVariable("id") id: Long): List<EventoUsuarioDto> {
-        return eventoService.findAllByUsuarioId(id).map { it.toEventoUsuarioDto(it) }
+    @PutMapping("/getEventosByUsuarioAndEmpresa")
+    fun getEventosByUsuarioIdAndEmpresaId(@RequestBody usuarioEmpresaDto : UsuarioEmpresaDto): List<EventoUsuarioDto> {
+        return eventoService.getEventosByUsuarioIdAndEmpresaId(usuarioEmpresaDto).map { it.toEventoUsuarioDto(it) }
     }
+
+    @PutMapping("/getCantEventosByUsuarioAndEmpresa")
+    fun getCantEventosByUsuarioIdAndEmpresaId(@RequestBody usuarioEmpresaDto : UsuarioEmpresaDto): Int {
+        return eventoService.getCantEventosByUsuarioIdAndEmpresaId(usuarioEmpresaDto)
+    }
+
 }
