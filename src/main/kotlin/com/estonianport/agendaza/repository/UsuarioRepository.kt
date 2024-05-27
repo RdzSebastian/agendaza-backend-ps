@@ -18,6 +18,7 @@ interface UsuarioRepository : CrudRepository<Usuario, Long> {
 
     //@EntityGraph(attributePaths = ["listaCargo"])
     fun getByUsername(username: String): Usuario
+
     @Query("SELECT c.usuario FROM Cargo c where c.empresa.id = ?1")
     fun findAll(id: Long, pageable: PageRequest) : Page<Usuario>
 
@@ -26,6 +27,7 @@ interface UsuarioRepository : CrudRepository<Usuario, Long> {
 
     @Query("SELECT COUNT(c) FROM Cargo c WHERE c.empresa.id = ?1 AND (c.usuario.nombre ILIKE %?2% OR c.usuario.apellido ILIKE %?2%)")
     fun cantidadDeUsuariosFiltrados(id : Long, buscar: String) : Int
+
     @Query(value = "SELECT c.usuario FROM Cargo c WHERE c.empresa.id = ?1 AND (c.usuario.nombre ILIKE %?2% OR c.usuario.apellido ILIKE %?2%)")
     fun usuariosByNombre(id : Long, buscar : String, pageable : Pageable) : Page<Usuario>
 

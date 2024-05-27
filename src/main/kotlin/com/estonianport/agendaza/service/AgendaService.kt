@@ -12,10 +12,6 @@ import org.springframework.stereotype.Service
 @Service
 class AgendaService {
 
-    //TODO refactor a cargo.toAgendaDto
-    fun getListaAgendasByUsuario(listaCargo : List<Cargo>): List<AgendaDto> {
-        return listaCargo.map { AgendaDto(it.empresa.id, it.empresa.nombre, it.tipoCargo.toString()) }
-    }
 
     //TODO refactor a cargo.EventoAgendaDto
     fun getAllEventosForAgendaByEmpresaId(listaEvento: List<Evento>): List<EventoAgendaDto> {
