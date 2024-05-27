@@ -38,9 +38,13 @@ interface EventoRepository : CrudRepository<Evento, Long>{
 
     @Query("SELECT COUNT(e) FROM Evento e WHERE e.empresa.id = ?1 AND (e.nombre ILIKE %?2% OR e.codigo ILIKE %?2%) AND e.fechaBaja IS NULL")
     fun cantidadDeEventosFiltrados(id : Long, buscar: String) : Int
+
     @EntityGraph(attributePaths = ["capacidad", "encargado", "cliente", "tipoEvento.capacidad"])
     fun findAllByEmpresa(empresa: Empresa) : List<Evento>
 
-    @Query("select e from Evento e where e.cliente.id = ?1 AND e.fechaBaja IS NULL")
-    fun findAllByUsuarioId(id: Long): List<Evento>
+    @Query("SELECT e FROM Evento e WHERE e.cliente.id = ?1 AND e.empresa.id = ?2 AND e.fechaBaja IS NULL ORDER BY e.id DESC LIMIT 10")
+    fun getEventosByUsuarioIdAndEmpresaId(usuarioId: Long, empresaId : Long ): List<Evento>
+
+    @Query("SELECT COUNT(e) FROM Evento e WHERE e.cliente.id = ?1 AND e.empresa.id = ?2 AND e.fechaBaja IS NULL")
+    fun getCantEventosByUsuarioIdAndEmpresaId(usuarioId: Long, empresaId : Long ): Int
 }
