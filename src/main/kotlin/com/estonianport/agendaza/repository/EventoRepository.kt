@@ -27,13 +27,13 @@ interface EventoRepository : CrudRepository<Evento, Long>{
 
     fun findAllByInicioBetweenAndEmpresa(inicio: LocalDateTime, fin: LocalDateTime, empresa: Empresa): List<Evento>
 
-    @Query(value = "select e from Evento e where e.empresa.id = ?1 AND e.fechaBaja IS NULL")
+    @Query(value = "select e from Evento e where e.empresa.id = ?1 AND e.fechaBaja IS NULL order by e.inicio desc")
     fun eventosByEmpresa(id : Long, pageable : Pageable) : Page<Evento>
 
     @Query("SELECT COUNT(e) FROM Evento e WHERE e.empresa.id = ?1 AND e.fechaBaja IS NULL")
     fun cantidadDeEventos(id : Long) : Int
 
-    @Query(value = "SELECT e FROM Evento e WHERE e.empresa.id = ?1 AND (e.nombre ILIKE %?2% OR e.codigo ILIKE %?2%) AND e.fechaBaja IS NULL")
+    @Query(value = "SELECT e FROM Evento e WHERE e.empresa.id = ?1 AND (e.nombre ILIKE %?2% OR e.codigo ILIKE %?2%) AND e.fechaBaja IS NULL order by e.inicio desc")
     fun eventosByNombre(id : Long, buscar : String, pageable : Pageable) : Page<Evento>
 
     @Query("SELECT COUNT(e) FROM Evento e WHERE e.empresa.id = ?1 AND (e.nombre ILIKE %?2% OR e.codigo ILIKE %?2%) AND e.fechaBaja IS NULL")
