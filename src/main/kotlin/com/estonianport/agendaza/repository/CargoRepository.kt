@@ -22,7 +22,7 @@ interface CargoRepository : CrudRepository<Cargo, Long>{
     fun findAllByUsuario(usuario : Usuario): List<Cargo>
 
 
-    @Query("SELECT new com.estonianport.agendaza.dto.AgendaDto(c.id, c.empresa.nombre, c.tipoCargo) FROM Cargo c WHERE c.usuario.id = ?1")
+    @Query("SELECT new com.estonianport.agendaza.dto.AgendaDto(c.empresa.id, c.empresa.nombre, c.tipoCargo) FROM Cargo c WHERE c.usuario.id = ?1")
     fun getListaCargosByUsuarioId(usuarioId : Long) : List<AgendaDto>
 }
 
